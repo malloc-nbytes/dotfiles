@@ -3,6 +3,18 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
+(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+                         ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")))
+
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
+
+(add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+
+(display-time-mode 1)
+
+(setq whitespace-style (quote (face spaces tabs space-mark tab-mark)))
+(global-whitespace-mode 1)
+
 (require 'smartparens-config)
 (require 'smartparens)
 
@@ -62,6 +74,7 @@
 (global-set-key (kbd "C->")         'mc/mark-next-like-this)
 (global-set-key (kbd "C-<")         'mc/mark-previous-like-this)
 (global-set-key (kbd "C-c C-<")     'mc/mark-all-like-tnis)
+(global-set-key (kbd "C-?")         'mc/skip-to-next-like-this)
 ;;; Move Text.
 (global-set-key (kbd "M-p")         'move-text-up)
 (global-set-key (kbd "M-n")         'move-text-down)
@@ -104,22 +117,3 @@
   (indent-according-to-mode)
   (forward-line -1)
   (indent-according-to-mode))
-
-;; Other.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(gruber-darker))
- '(custom-safe-themes
-   '("bddf21b7face8adffc42c32a8223c3cc83b5c1bbd4ce49a5743ce528ca4da2b6" default))
- '(ispell-dictionary nil)
- '(package-selected-packages
-   '(smartparens expand-region auto-complete good-scroll rust-mode imenu-list magit vterm crux gruber-darker-theme helm-swoop move-text multiple-cursors smex)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
