@@ -10,24 +10,34 @@
 
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
 
-(display-time-mode 1)
+(require 'dired-x)
+(global-set-key (kbd "C-x C-j")         'dired-jump)
 
+(display-time-mode 1)
 (setq whitespace-style (quote (face spaces tabs space-mark tab-mark)))
 (global-whitespace-mode 1)
 
-(require 'smartparens-config)
-(require 'smartparens)
+(setq-default indent-tab-mode nil)
+
+(defun untabify-except-makefiles ()
+  "Replace tabs with spaces except in makefiles."
+  (unless (derived-mode-p 'makefile-mode)
+    (untabify (point-min) (point-max))))
+(add-hook 'before-save-hook 'untabify-except-makefiles)
+
+;; (setq split-height-threshold           9999)
+;; (setq split-width-threshold            nil)
 
 ;; Vanilla settings.
 (show-paren-mode 1)
 (setq make-backup-files                nil)
 (setq display-line-numbers-type       'relative)
 (setq inhibit-startup-screen           t)
-(setq split-height-threshold           9999)
-(setq split-width-threshold            nil)
 (setq-default show-trailing-whitespace t)
 (scroll-bar-mode      -1)
 (ido-mode              1)
+(ido-everywhere        1)
+(ido-ubiquitous-mode   1)
 (menu-bar-mode         0)
 (tool-bar-mode         0)
 (delete-selection-mode 1)
@@ -50,6 +60,8 @@
 (setq mc/always-run-for-all     t)
 ;;; Smart Parens.
 (smartparens-global-mode        t)
+;;; Golden Ratio
+(golden-ratio-mode)
 
 ;; Keybind remaps.
 ;;; Emacs.
@@ -58,6 +70,7 @@
 (global-set-key (kbd "C-'")         'next-buffer)
 (global-set-key (kbd "C-x m")       'delete-other-windows)
 (global-set-key (kbd "C-x '")       'shell)
+
 ;;; Crux.
 (global-set-key (kbd "C-c e")       'crux-eval-and-replace)
 (global-set-key (kbd "C-c d")       'crux-duplicate-current-line-or-region)
@@ -85,7 +98,7 @@
 (global-key-binding (kbd "M-x")     #'smex)
 (global-set-key (kbd "M-x")         'smex)
 (global-set-key (kbd "M-X")         'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c")     'execute-extended-command)
+;; (global-set-key (kbd "C-c C-l")     'execute-extended-command)
 ;;; Imenu.
 (global-set-key (kbd "C-c f")       'imenu-list)
 ;;; Auto Complete.
@@ -108,7 +121,8 @@
     (call-interactively 'compile)
     (delete-other-windows buffer-window)
     (switch-to-buffer compilation-buffer-name)))
-(global-set-key (kbd "C-c c") 'compile-and-switch-to-compilation-buffer)
+(global-set-key (kbd "C-c c") 'compile)
+(global-set-key (kbd "C-c M-c") 'compile-and-switch-to-compilation-buffer)
 
 (sp-local-pair 'prog-mode "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
 (defun my-create-newline-and-enter-sexp (&rest _ignored)
@@ -117,3 +131,26 @@
   (indent-according-to-mode)
   (forward-line -1)
   (indent-according-to-mode))
+
+
+;; Other.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes '(gruber-darker))
+ '(custom-safe-themes
+   '("bddf21b7face8adffc42c32a8223c3cc83b5c1bbd4ce49a5743ce528ca4da2b6" default))
+ '(easy-repeat-command-list
+   '(other-window next-buffer scroll-other-window recenter-top-bottom kill-buffer backward-page forward-page previous-error next-error scroll-up-command scroll-down-command beginning-of-defun end-of-defun org-previous-visible-heading org-next-visible-heading org-forward-heading-same-level org-backward-heading-same-level outline-up-heading outline-next-visible-heading outline-previous-visible-heading outline-forward-same-level outline-backward-same-level git-gutter:previous-hunk git-gutter:next-hunk paredit-forward paredit-backward paredit-backward-up enlarge-window-horizontally shrink-window-horizontally enlarge-window))
+ '(ido-max-prospects 25)
+ '(ispell-dictionary nil)
+ '(package-selected-packages
+   '(ido-completing-read+ golden-ratio smartparens expand-region auto-complete good-scroll rust-mode imenu-list magit vterm crux gruber-darker-theme helm-swoop move-text multiple-cursors smex)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
