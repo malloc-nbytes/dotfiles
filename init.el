@@ -10,7 +10,6 @@
 (require 'dashboard)
 
 ;; Misc. Config. ;;
-(setenv "PATH" (concat (getenv "PATH") ":/home/zdh/.cargo/bin"))
 (add-hook 'dired-mode-hook (lambda () (whitespace-mode -1)))
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
@@ -35,9 +34,13 @@
 
 ;; Package Config. ;;
 (dashboard-setup-startup-hook)
-(setq dashboard-banner-logo-title "www.gnu.org / Emacs version 27.1")
-(setq dashboard-startup-banner "~/Pictures/emacs_fancy_logos/xemacs_color.svg")
-(setq dashboard-footer-messages '("I showed you my code, pls respond (ﾉಥДಥ)ﾉ ︵┻━┻･/"))
+(setq dashboard-startup-banner "~/Pictures/freebsd.png")
+(setq dashboard-banner-logo-title "\"Now you know why we do this\"")
+(setq dashboard-footer-messages '("\"Over the centuries, mankind has tried many ways of combating the forces of evil... prayer, fasting,\ngood works and so on. Up until Doom, no one seemed to have thought about the double-barrel shotgun.\nEat leaden death, demon...\""))
+;; (setq dashboard-footer-messages '("While any text editor can save your files, only Emacs can save your soul"))
+;; (setq dashboard-banner-logo-title "www.gnu.org / Emacs version 27.1")
+;; (setq dashboard-startup-banner "~/Pictures/xemacs_color.svg")
+;; (setq dashboard-footer-messages '("I showed you my code, pls respond (ﾉಥДಥ)ﾉ ︵┻━┻･/"))
 (setq dashboard-items nil)
 (ido-mode 1)
 (ido-everywhere 1)
@@ -49,7 +52,6 @@
 (smartparens-global-mode t)
 (golden-ratio-mode)
 (global-auto-complete-mode 1)
-
 
 ;; Keybindings. ;;
 (global-set-key (kbd "C-x C-j") 'dired-jump)
@@ -119,3 +121,5 @@
   (indent-according-to-mode)
   (forward-line -1)
   (indent-according-to-mode))
+
+;; Other.
